@@ -18,6 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://svi-portfolio-b.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app"
