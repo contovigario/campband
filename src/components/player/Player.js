@@ -8,7 +8,7 @@ function Player() {
     const [selectedTrack, setSelectedTrack] = useState(0);
 
     const selectTrack = (trackid) => {
-        console.log('select track')
+        console.log('select track from ' + selectedTrack + ' to ' + trackid)
         setSelectedTrack(trackid);
     }
 
@@ -35,16 +35,11 @@ function Player() {
         },
         {
             id:3,
-            name: "Carbonated",
-            duration: "6:10",
+            name: "Unstopabble Force",
+            duration: "2:10",
+            file: 'dontneed.mp3',
             selected:false
-        },
-        {
-            id:4,
-            name: "Rodent",
-            duration: "11:32",
-            selected:false
-        },
+        }
       ];
 
     return (

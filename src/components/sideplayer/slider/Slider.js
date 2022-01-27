@@ -11,14 +11,16 @@ function Slider({ percentage = 0, onChange }) {
   const thumbRef = useRef()
 
   useEffect(() => {
-    const rangeWidth = rangeRef.current.getBoundingClientRect().width
-    const thumbWidth = thumbRef.current.getBoundingClientRect().width
-    const centerThumb = (thumbWidth / 100) * percentage * -1
-    const centerProgressBar =
-      thumbWidth + (rangeWidth / 100) * percentage - (thumbWidth / 100) * percentage
-    setPosition(percentage)
-    setMarginLeft(centerThumb)
-    setProgressBarWidth(centerProgressBar)
+    if(!isNaN(percentage)) {
+      const rangeWidth = rangeRef.current.getBoundingClientRect().width
+      const thumbWidth = thumbRef.current.getBoundingClientRect().width
+      const centerThumb = (thumbWidth / 100) * percentage * -1
+      const centerProgressBar =
+        thumbWidth + (rangeWidth / 100) * percentage - (thumbWidth / 100) * percentage
+      setPosition(percentage)
+      setMarginLeft(centerThumb)
+      setProgressBarWidth(centerProgressBar)
+    }
   }, [percentage])
 
   return (
