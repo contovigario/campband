@@ -1,0 +1,14 @@
+#cover {
+  background-image: url('../../images/Besidethepoint.jpg');
+  background-size:cover;
+  width: 70vmin;
+  height:70vmin;
+}
+
+#player_controls {
+  background-color: #161616;
+  width:70vmin;
+  height:20vmin;
+}
+
+

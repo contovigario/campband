@@ -1,0 +1,27 @@
+.control-panel {
+    padding: 0 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .timer {
+    font-size: 10px;
+    font-weight: 200;
+    color: rgb(196, 196, 196);
+  }
+
+  #lefttime {
+    padding-top:5vmin;
+    width: 30%;
+    height: 10vmin;
+    position: relative;
+    text-align: right;
+  }
+
+  #righttime {
+    padding-top:5vmin;
+    width: 30%;
+    height: 10vmin;
+    position: relative;
+    text-align: left;
+  }
