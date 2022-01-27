@@ -72,8 +72,28 @@ td {
 	margin-top:3vmin;
 }
 
-#download_button, #bitcoin_button {
-	margin:2vmin;
+.float_buttons {
+	align-content: flex-end;
+  margin:2vmin;
+  height:4vmin;
+  width:4vmin;
+  cursor:pointer;
+}
+
+.float_buttons:hover {
+  filter: brightness(1.2);
+}
+
+#download_button {
+  background-image:url('../../images/download.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#bitcoin_button {
+	background-image:url('../../images/donate.png');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 #blank {
@@ -89,11 +109,17 @@ td {
 }
 
 #wallet {
+  display:none;
   float:right;
+  background-color:#f1f1f1;
+  padding:1vmin;
+  border: 1px gray solid;
+  border-radius: 5px;
+  color:black;
 }
 
-.float_buttons {
-	align-content: flex-end;
+.wallet_visible {
+  display:block!important;
 }
 
 #my_buttons {

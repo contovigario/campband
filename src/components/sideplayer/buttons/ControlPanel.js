@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import './ControlPanel.css'
 
-function ControlPanel({ play, isPlaying, duration, currentTime }) {
+function ControlPanel({ nextTrack, prevTrack, play, isPlaying, duration, currentTime }) {
   function secondsToHms(seconds) {
     if (!seconds) return '00:00'
 
@@ -36,7 +36,11 @@ function ControlPanel({ play, isPlaying, duration, currentTime }) {
       <div id="lefttime">
         <div className='timer'>{secondsToHms(currentTime)}</div>
       </div>
-      <Button play={play} isPlaying={isPlaying} />
+      <Button 
+        play={play} 
+        isPlaying={isPlaying}
+        prevTrack={prevTrack} 
+        nextTrack={nextTrack}/>
       <div id="righttime">
         <div className='timer'>{secondsToHms(duration)}</div>
       </div>
