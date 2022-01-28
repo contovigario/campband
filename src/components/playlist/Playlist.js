@@ -14,7 +14,7 @@ function Playlist(props) {
     }
 
     const setMenuSelected = (() => {
-        console.log('in playlist - set menu selected true')
+        console.log('Playlist - setMenuSelected - triggered by clicking menu ')
         props.setMenuSelected(true)
     })
 
@@ -41,7 +41,10 @@ function Playlist(props) {
                     <tbody>
                         {props.tracklist.map((track) => (
                             <tr 
-                                className={props.selectedTrack === track.id ? 'track_row selected' : 'track_row'} 
+                                className={
+                                    ((props.selectedAlbum === props.selectedViewAlbum && props.selectedTrack === track.id) ? 
+                                    'track_row selected' : 
+                                    'track_row')} 
                                 key={track.id}
                                 onClick={() => props.selectTrack(track.id)}>
                                 <td className="table_track_number">
@@ -58,7 +61,8 @@ function Playlist(props) {
                     Download the album and/or donate bitcoin to support the artist.
                 </div>
                 <div id="my_buttons">
-                    <div id="download_button" className="float_buttons"></div>
+                    <div id="download_button" className="float_buttons" 
+                        onClick={() => props.saveFile()}></div>
                     <div id="bitcoin_button" className="float_buttons" onClick={showWallet}></div>
                 </div>
                 <div>

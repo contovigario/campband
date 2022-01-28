@@ -24,7 +24,7 @@ function Sideplayer(props) {
   }
 
   const play = () => {
-
+    console.log('Sideplayer - play() - triggered by audio loading / clicking controls')
     const audio = audioRef.current
     audio.volume = 0.5
 
@@ -34,10 +34,7 @@ function Sideplayer(props) {
         console.log('case 0')
         props.selectTrack(1)
         break;
-      case 1:
-      case 2:
-      case 3:
-        console.log('case 1 2 3')
+      default:
         if (!isPlaying || (isPlaying && !props.loopAudios)) {
           console.log('play ' + String(isPlaying) + '-' + String(props.loopAudios))
           setIsPlaying(true)
@@ -49,8 +46,6 @@ function Sideplayer(props) {
           setIsPlaying(false)
           audio.pause()
         }
-        break;
-      default:
         break;
     }
   }
@@ -66,6 +61,7 @@ function Sideplayer(props) {
   }
 
   useEffect(() => {
+    console.log('Sideplayer - useEffect - triggered by props.selectedTrack')
     switch(props.selectedTrack) {
       case 0:
         console.log('case 0')
@@ -83,21 +79,22 @@ function Sideplayer(props) {
         break;
       default:
         const aSrc = 
-          (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack-1].file ?
-            props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack-1].file :
+          (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack-1].file ?
+            props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack-1].file :
             0)
         setAudioSource(aSrc);
         setIsLoading(true)
         break;
     }
-  }, [props.selectedTrack])
+  }, [props.selectedTrack, props.selectedAlbum])
   
   useEffect (() => {
+    console.log('Sideplayer - useEffect - triggered by percentage, props')
     if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {
         console.log('autoNEXT')
         props.setLoopAudios(false);
         props.selectTrack(
-          (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack] ? 
+          (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack] ? 
             (props.selectedTrack+1) : 
             -1)
         )
@@ -105,22 +102,25 @@ function Sideplayer(props) {
   }, [percentage, props])
 
   useEffect (() => {
+    console.log('Sideplayer - useEffect - triggered by props.selectedViewAlbum')
     if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {
-        console.log('autoNEXT')
+        console.log('changed selectedViewAlbum')
     }
   }, [props.selectedViewAlbum])
 
   const nextTrack = () => {
+    console.log('Sideplayer - nextTrack - triggered by clicking next')
     props.selectTrack(
-      (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack] ? 
+      (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack] ? 
         (props.selectedTrack+1) : 
         -1)
     )
   }
 
   const prevTrack = () => {
+    console.log('Sideplayer - nextTrack - triggered by clicking previous')
     props.selectTrack(
-      (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack-2] ? 
+      (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack-2] ? 
         (props.selectedTrack-1) : 
         -1)
     )
@@ -130,15 +130,15 @@ function Sideplayer(props) {
       <div 
         id="sideplayer"
         className=
-          {(props.albums[props.selectedViewAlbum-1] && props.tracklist[props.selectedTrack-1]) ? 
+          {(props.albums[props.selectedAlbum-1] && props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack-1]) ? 
             'flex-container-v fadeIn' : 
             'flex-container-v fadeOut'} 
           >
         <div id="blank"></div>
         <div id="cover" 
           className=
-            {(props.albums[props.selectedViewAlbum-1] && props.tracklist[props.selectedTrack-1]) ? 
-              props.albums[props.selectedViewAlbum-1].cover : 
+            {(props.albums[props.selectedAlbum-1] && props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack-1]) ? 
+              props.albums[props.selectedAlbum-1].cover : 
               'blankClass'}>
         </div>
         <div id="player_controls">
@@ -150,7 +150,9 @@ function Sideplayer(props) {
                 nextTrack={nextTrack}
                 prevTrack={prevTrack} />
             <Slider 
-                tracklist={props.tracklist}
+                tracklist={(props.albums[props.selectedAlbum-1] ? 
+                  props.albums[props.selectedAlbum-1].tracklist : 
+                  [])}
                 selectedTrack={props.selectedTrack}
                 percentage={percentage} 
                 onChange={onChange} />
