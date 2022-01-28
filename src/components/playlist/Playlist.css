@@ -32,8 +32,8 @@
 
 #album_title {
     flex:1 0 auto;
-    text-align:right;
     padding-top:4vh;
+    display:flex;
 }
 
 #playlist_list {
@@ -161,4 +161,19 @@ tr {
 #goback:hover {
   cursor:pointer;
 	filter:brightness(1.4)
+}
+
+#album_info {
+  flex: 1 0 auto;
+  height: 12vmin;
+  padding-right: 2vmin;
+}
+
+#album_cover {
+  flex: 0 0 12vmin;
+  height: 12vmin;
+  background-image: url(../../images/white.JPG);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
 }

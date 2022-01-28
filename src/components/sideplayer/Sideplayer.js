@@ -3,9 +3,7 @@ import "../fontawesome/css/all.css";
 import "./Sideplayer.css";
 import ControlPanel from "./buttons/ControlPanel";
 import Slider from "./slider/Slider";
-import mrjames from '../../audio/MR_JAMES.mp3'
-import answers from '../../audio/answers.mp3'
-import dontneed from '../../audio/dontneed.mp3'
+
 
 
 function Sideplayer(props) {
@@ -16,7 +14,6 @@ function Sideplayer(props) {
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [audioSource, setAudioSource] = useState(0)
-  const [loopAudios, setLoopAudios] = useState(true)
   
   const audioRef = useRef()
 
@@ -29,7 +26,7 @@ function Sideplayer(props) {
   const play = () => {
 
     const audio = audioRef.current
-    audio.volume = 0.1
+    audio.volume = 0.5
 
     switch(props.selectedTrack) {
       case 0:
@@ -41,14 +38,14 @@ function Sideplayer(props) {
       case 2:
       case 3:
         console.log('case 1 2 3')
-        if (!isPlaying || (isPlaying && !loopAudios)) {
-          console.log('play')
+        if (!isPlaying || (isPlaying && !props.loopAudios)) {
+          console.log('play ' + String(isPlaying) + '-' + String(props.loopAudios))
           setIsPlaying(true)
           audio.play()
-          setLoopAudios(true)
+          props.setLoopAudios(true)
         }
         else if (isPlaying) {
-          console.log('pause')
+          console.log('pause ' + String(isPlaying) + '-' + String(props.loopAudios))
           setIsPlaying(false)
           audio.pause()
         }
@@ -71,27 +68,12 @@ function Sideplayer(props) {
   useEffect(() => {
     switch(props.selectedTrack) {
       case 0:
-        console.log('useEffect 0')
+        console.log('case 0')
         setAudioSource(0);
         setIsLoading(false)
         break;
-      case 1:
-        console.log('useEffect 1')
-        setAudioSource(mrjames);
-        setIsLoading(true)
-        break;
-      case 2:
-        console.log('useEffect 2')
-        setAudioSource(answers);
-        setIsLoading(true)
-        break;
-      case 3:
-        console.log('useEffect 3')
-        setAudioSource(dontneed);
-        setIsLoading(true)
-        break;
       case -1:
-        console.log('case -1 in effect')
+        console.log('case -1')
         setIsLoading(false)
         setIsPlaying(false)
         setPercentage(0)
@@ -100,34 +82,47 @@ function Sideplayer(props) {
         audioRef.current.pause()
         break;
       default:
+        const aSrc = 
+          (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack-1].file ?
+            props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack-1].file :
+            0)
+        setAudioSource(aSrc);
+        setIsLoading(true)
+        break;
     }
   }, [props.selectedTrack])
   
   useEffect (() => {
-    if(props.selectedTrack !== 0 && percentage===100 && loopAudios) {
+    if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {
         console.log('autoNEXT')
-        setLoopAudios(false);
+        props.setLoopAudios(false);
         props.selectTrack(
-          (props.selectedTrack + 1 > 3 ? -1 : props.selectedTrack + 1)
+          (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack] ? 
+            (props.selectedTrack+1) : 
+            -1)
         )
     }
   }, [percentage, props])
 
   useEffect (() => {
-    if(props.selectedTrack !== 0 && percentage===100 && loopAudios) {
+    if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {
         console.log('autoNEXT')
     }
   }, [props.selectedViewAlbum])
 
   const nextTrack = () => {
     props.selectTrack(
-      (props.selectedTrack + 1 > 3 ? -1 : props.selectedTrack + 1)
+      (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack] ? 
+        (props.selectedTrack+1) : 
+        -1)
     )
   }
 
   const prevTrack = () => {
     props.selectTrack(
-      (props.selectedTrack - 1 < 1 ? -1 : props.selectedTrack - 1)
+      (props.albums[props.selectedViewAlbum-1].tracklist[props.selectedTrack-2] ? 
+        (props.selectedTrack-1) : 
+        -1)
     )
   }
 

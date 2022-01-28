@@ -4,16 +4,22 @@ import Sideplayer from '../sideplayer/Sideplayer.js';
 import Playlist from '../playlist/Playlist.js';
 import AlbumList from '../albumlist/AlbumList.js'
 
+//Audio sources
+import mrjames from '../../audio/MR_JAMES.mp3'
+import answers from '../../audio/answers.mp3'
+import dontneed from '../../audio/dontneed.mp3'
+
 function Player() {
 
     const [selectedTrack, setSelectedTrack] = useState(0);
     const [menuSelected, setMenuSelected] = useState(true);
     const [selectedViewAlbum, setSelectedViewAlbum] = useState(0);
-    const [selectedAlbum, setSelectedAlbum] = useState(0);
     const [tracklist, setTracklist] = useState([]);
+    const [loopAudios, setLoopAudios] = useState(true)
 
     const selectTrack = (trackid) => {
         console.log('select track from ' + selectedTrack + ' to ' + trackid)
+        setLoopAudios(false);
         setSelectedTrack(trackid);
     }
 
@@ -29,21 +35,21 @@ function Player() {
                     id:1,
                     name: "Falaise",
                     duration: "2:56",
-                    file: 'MR_JAMES.mp3',
+                    file: mrjames,
                     selected:false
                 },
                 {
                     id:2,
                     name: "Monjoq2",
                     duration: "4:20",
-                    file: 'answers.mp3',
+                    file: answers,
                     selected:false
                 },
                 {
                     id:3,
                     name: "Unstopabble Force",
                     duration: "2:10",
-                    file: 'dontneed.mp3',
+                    file: dontneed,
                     selected:false
                 }
             ]
@@ -59,14 +65,14 @@ function Player() {
                     id:1,
                     name: "fafa",
                     duration: "2:56",
-                    file: 'MR_JAMES.mp3',
+                    file: dontneed,
                     selected:false
                 },
                 {
                     id:2,
                     name: "Captain Alex",
                     duration: "4:20",
-                    file: 'answers.mp3',
+                    file: mrjames,
                     selected:false
                 }
             ]
@@ -105,6 +111,8 @@ function Player() {
                     tracklist = {tracklist} />
             )}
             <Sideplayer 
+                setLoopAudios = {setLoopAudios}
+                loopAudios = {loopAudios}
                 albums = {albums}
                 selectedViewAlbum = {selectedViewAlbum}
                 selectTrack = {selectTrack}

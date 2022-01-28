@@ -25,9 +25,14 @@ function Playlist(props) {
                     onClick = {() => { setMenuSelected() }}
                     className="backsymbol"></div>
                 <div id="album_title">
-                    <div id="artist">Noiva</div>
-                    <div id="album">{props.albums[props.selectedViewAlbum-1].name}</div>
-                    <span id="year">{props.albums[props.selectedViewAlbum-1].year}</span>
+                    <div id="album_info">
+                        <div id="artist">Noiva</div>
+                        <div id="album">{props.albums[props.selectedViewAlbum-1].name}</div>
+                        <span id="year">{props.albums[props.selectedViewAlbum-1].year}</span>
+                    </div>
+                    <div id="album_cover"
+                        className={props.albums[props.selectedViewAlbum-1].cover}>
+                    </div>
                 </div>
             </div>
             <div id="playlist_list">
