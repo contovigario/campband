@@ -8,7 +8,8 @@ function Player() {
 
     const [selectedTrack, setSelectedTrack] = useState(0);
     const [menuSelected, setMenuSelected] = useState(true);
-    const [selectedAlbum, setSelectedAlbum] = useState(2);
+    const [selectedViewAlbum, setSelectedViewAlbum] = useState(0);
+    const [selectedAlbum, setSelectedAlbum] = useState(0);
     const [tracklist, setTracklist] = useState([]);
 
     const selectTrack = (trackid) => {
@@ -72,10 +73,10 @@ function Player() {
         }
     ]
 
-    const changeTracklist = (selectedAlbum, albums) => {
+    const changeTracklist = (selectedViewAlbum, albums) => {
         console.log('changeTracklist')
-        setTracklist(albums[selectedAlbum-1].tracklist)
-        setSelectedAlbum(selectedAlbum);
+        setTracklist(albums[selectedViewAlbum-1].tracklist)
+        setSelectedViewAlbum(selectedViewAlbum);
     }
 
     useEffect(() => {
@@ -97,7 +98,7 @@ function Player() {
             ) : (
                 <Playlist 
                     albums = {albums}
-                    selectedAlbum = {selectedAlbum}
+                    selectedViewAlbum = {selectedViewAlbum}
                     setMenuSelected = {setMenuSelected}
                     selectTrack = {selectTrack}
                     selectedTrack = {selectedTrack}
@@ -105,7 +106,7 @@ function Player() {
             )}
             <Sideplayer 
                 albums = {albums}
-                selectedAlbum = {selectedAlbum}
+                selectedViewAlbum = {selectedViewAlbum}
                 selectTrack = {selectTrack}
                 selectedTrack = {selectedTrack}
                 tracklist = {tracklist}

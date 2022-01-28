@@ -1,5 +1,5 @@
 #cover {
-  background-image: url('../../images/Besidethepoint.jpg');
+  background-image: url('../../images/white.JPG');
   background-size:cover;
   width: 65vmin;
   height:65vmin;
@@ -19,3 +19,18 @@
   background-image: url('../../images/Besidethepoint.jpg')!important;
 }
 
+.fadeOut {
+  opacity:0;
+  transition: opacity 0.5s;
+}
+
+.fadeIn {
+  opacity:1;
+  transition: opacity 0.5s;
+}
+
+
+
+.blankClass {
+  background-image: url('../../images/white.JPG')!important;
+}

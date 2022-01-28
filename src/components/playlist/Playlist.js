@@ -26,8 +26,8 @@ function Playlist(props) {
                     className="backsymbol"></div>
                 <div id="album_title">
                     <div id="artist">Noiva</div>
-                    <div id="album">{props.albums[props.selectedAlbum-1].name}</div>
-                    <span id="year">{props.albums[props.selectedAlbum-1].year}</span>
+                    <div id="album">{props.albums[props.selectedViewAlbum-1].name}</div>
+                    <span id="year">{props.albums[props.selectedViewAlbum-1].year}</span>
                 </div>
             </div>
             <div id="playlist_list">

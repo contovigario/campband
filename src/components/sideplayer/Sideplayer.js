@@ -113,6 +113,12 @@ function Sideplayer(props) {
     }
   }, [percentage, props])
 
+  useEffect (() => {
+    if(props.selectedTrack !== 0 && percentage===100 && loopAudios) {
+        console.log('autoNEXT')
+    }
+  }, [props.selectedViewAlbum])
+
   const nextTrack = () => {
     props.selectTrack(
       (props.selectedTrack + 1 > 3 ? -1 : props.selectedTrack + 1)
@@ -126,9 +132,20 @@ function Sideplayer(props) {
   }
 
     return (
-      <div className="flex-container-v">
+      <div 
+        id="sideplayer"
+        className=
+          {(props.albums[props.selectedViewAlbum-1] && props.tracklist[props.selectedTrack-1]) ? 
+            'flex-container-v fadeIn' : 
+            'flex-container-v fadeOut'} 
+          >
         <div id="blank"></div>
-        <div id="cover" className={props.albums[props.selectedAlbum-1].cover}></div>
+        <div id="cover" 
+          className=
+            {(props.albums[props.selectedViewAlbum-1] && props.tracklist[props.selectedTrack-1]) ? 
+              props.albums[props.selectedViewAlbum-1].cover : 
+              'blankClass'}>
+        </div>
         <div id="player_controls">
             <ControlPanel
                 play={play}
