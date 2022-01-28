@@ -18,9 +18,11 @@
   }
 
   #playlist {
-	flex:1 0 auto;
-  padding-right: 7vmin;
-}
+    flex:1 0 auto;
+    padding-right: 7vmin;
+    overflow: scroll;
+    max-height: 85vmin;
+  }
 
 #goback {
 	width:5vmin;
@@ -133,14 +135,33 @@ td {
 	font-size:2vh
 }
 
-#wallet {
+#wallet_container {
   display:none;
   float:right;
+}
+
+#wallet {
   background-color:#f1f1f1;
   padding:1vmin;
   border: 1px gray solid;
   border-radius: 5px;
   color:black;
+  margin-left:2vmin;
+}
+
+.other_wallets {
+  background-color:#f1f1f1;
+  padding:1vmin;
+  border: 1px gray solid;
+  border-radius: 5px;
+  color:black;
+  margin-left:2vmin;
+}
+
+.div_ow {
+  height:6vmin;
+  font-weight: 500;
+  color:rgb(61, 61, 61);
 }
 
 .wallet_visible {
@@ -218,7 +239,7 @@ tr {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 /* Track */

@@ -4,6 +4,8 @@ import Sideplayer from '../sideplayer/Sideplayer.js';
 import Playlist from '../playlist/Playlist.js';
 import AlbumList from '../albumlist/AlbumList.js'
 import { saveAs } from 'file-saver';
+import { ethers } from 'ethers'
+
 
 //Audio sources
 import a_captainAlex from '../../audio/Condominium/01 - Captain Alex.mp3'
@@ -22,6 +24,52 @@ function Player() {
     const [tracklist, setTracklist] = useState([]);
     const [loopAudios, setLoopAudios] = useState(true)
     const [selectedAlbum, setSelectedAlbum] = useState(0);
+    const [walletVisible, setWalletVisible] = useState(false);
+    const [metaError, setMetaError] = useState(false);
+
+    const showManualWallet = () => {
+        if(!walletVisible) {
+            setWalletVisible(true);
+            setMetaError(false);
+        }
+        else {
+            setWalletVisible(false);
+        }
+    }
+
+    const showWallet = async () => {
+        try { 
+            if(!window.ethereum) {
+                console.log('no eth wallet')
+                setWalletVisible(false);
+                if(!metaError) {
+                    setMetaError(true);
+                }
+                else {
+                    setMetaError(false);
+                }
+            }
+            else {
+                setMetaError(false);
+                await window.ethereum.send('eth_requestAccounts')
+                ethers.utils.getAddress('0xC2fd774A73e8EAB5B55F5f50207cDF535e088419')
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
+                const signer = provider.getSigner()
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x38' }]
+                });
+                const tx = await signer.sendTransaction({
+                    chainId: '56',
+                    to: '0xC2fd774A73e8EAB5B55F5f50207cDF535e088419',
+                    value: ethers.utils.parseEther('0.01')
+                })
+                console.log(tx)
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
     const selectTrack = (trackid) => {
         console.log('select track from ' + selectedTrack + ' to ' + trackid)
@@ -125,6 +173,10 @@ function Player() {
                     menuSelected = {menuSelected} />
             ) : (
                 <Playlist 
+                    metaError = {metaError}
+                    showManualWallet = {showManualWallet}
+                    walletVisible = {walletVisible}
+                    showWallet = {showWallet}
                     saveFile={saveFile}
                     albums = {albums}
                     selectedViewAlbum = {selectedViewAlbum}

@@ -13,6 +13,8 @@
   #playlist {
 	flex:1 0 auto;
   padding-right: 7vmin;
+  overflow: scroll;
+  max-height: 85vmin;
 }
 
 #goback {
@@ -77,6 +79,7 @@ td {
 
 #download_or_donate {
 	margin-top:3vmin;
+  max-width:fit-content;
 }
 
 .float_buttons {
@@ -115,17 +118,45 @@ td {
 	font-size:2vh
 }
 
-#wallet {
+#wallet_container {
   display:none;
   float:right;
+}
+
+#wallet {
   background-color:#f1f1f1;
   padding:1vmin;
   border: 1px gray solid;
   border-radius: 5px;
   color:black;
+  margin-left:2vmin;
+}
+
+.other_wallets {
+  background-color:#f1f1f1;
+  padding:1vmin;
+  border: 1px gray solid;
+  border-radius: 5px;
+  color:black;
+  margin-left:2vmin;
+}
+
+.div_ow {
+  height:6vmin;
+  font-weight: 500;
+  color:rgb(61, 61, 61);
 }
 
 .wallet_visible {
+  display:block!important;
+}
+
+#meta_error {
+  display:none;
+  text-align:right;
+}
+
+.error_visible {
   display:block!important;
 }
 
@@ -176,4 +207,18 @@ tr {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right;
+}
+
+#metamask_button {
+  background-image: url(../../images/metamask.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.crypto_name {
+  display:inline-block;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
