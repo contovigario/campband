@@ -1,11 +1,12 @@
 import React, {useState, useRef, useEffect} from "react";
-import "../playlist/fontawesome/css/all.css";
+import "../fontawesome/css/all.css";
 import "./Sideplayer.css";
 import ControlPanel from "./buttons/ControlPanel";
 import Slider from "./slider/Slider";
 import mrjames from '../../audio/MR_JAMES.mp3'
 import answers from '../../audio/answers.mp3'
 import dontneed from '../../audio/dontneed.mp3'
+
 
 function Sideplayer(props) {
 
@@ -101,7 +102,7 @@ function Sideplayer(props) {
       default:
     }
   }, [props.selectedTrack])
-
+  
   useEffect (() => {
     if(props.selectedTrack !== 0 && percentage===100 && loopAudios) {
         console.log('autoNEXT')
@@ -127,7 +128,7 @@ function Sideplayer(props) {
     return (
       <div className="flex-container-v">
         <div id="blank"></div>
-        <div id="cover"></div>
+        <div id="cover" className={props.albums[props.selectedAlbum-1].cover}></div>
         <div id="player_controls">
             <ControlPanel
                 play={play}
@@ -136,7 +137,11 @@ function Sideplayer(props) {
                 currentTime={currentTime}
                 nextTrack={nextTrack}
                 prevTrack={prevTrack} />
-            <Slider percentage={percentage} onChange={onChange} />
+            <Slider 
+                tracklist={props.tracklist}
+                selectedTrack={props.selectedTrack}
+                percentage={percentage} 
+                onChange={onChange} />
             <audio
                 ref={audioRef}
                 onTimeUpdate={getCurrDuration}

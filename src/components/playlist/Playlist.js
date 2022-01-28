@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./fontawesome/css/all.css";
+import "../fontawesome/css/all.css";
 import "./Playlist.css";
 
 function Playlist(props) {
@@ -13,14 +13,21 @@ function Playlist(props) {
             setWalletVisible(false);
     }
 
+    const setMenuSelected = (() => {
+        console.log('in playlist - set menu selected true')
+        props.setMenuSelected(true)
+    })
+
     return (
         <div className="flex-container-v" id="playlist">
             <div className="flex-container-h">
-                <div id="goback"></div>
+                <div id="goback" 
+                    onClick = {() => { setMenuSelected() }}
+                    className="backsymbol"></div>
                 <div id="album_title">
                     <div id="artist">Noiva</div>
-                    <div id="album">Beside the point</div>
-                    <span id="year">2022</span>
+                    <div id="album">{props.albums[props.selectedAlbum-1].name}</div>
+                    <span id="year">{props.albums[props.selectedAlbum-1].year}</span>
                 </div>
             </div>
             <div id="playlist_list">

@@ -13,6 +13,10 @@
     margin:3vmin;
 }
 
+#playpause:hover {
+  filter:brightness(0.7)
+}
+
 #prev {
     background-image: url('../../../images/prevspotify.png');
     background-size:70%;
@@ -31,6 +35,11 @@
     width: 5vmin;
     height: 5vmin;
     margin:3vmin;
+  }
+
+  #next:hover, #prev:hover {
+    filter:brightness(0.7);
+    cursor:pointer;
   }
 
 .btn-container {

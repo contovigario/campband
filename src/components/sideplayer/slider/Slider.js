@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import './Slider.css'
 import './Thumb.css'
 
-function Slider({ percentage = 0, onChange }) {
+function Slider({tracklist, selectedTrack, percentage = 0, onChange }) {
   const [position, setPosition] = useState(0)
   const [marginLeft, setMarginLeft] = useState(0)
   const [progressBarWidth, setProgressBarWidth] = useState(0)
@@ -48,6 +48,10 @@ function Slider({ percentage = 0, onChange }) {
           className='range'
           onChange={onChange}
         />
+      </div>
+      <div id="playing_now">
+        <span className="playing_now_track">{(tracklist[selectedTrack-1] ? tracklist[selectedTrack-1].name : '')}</span>
+        <span className="playing_now_album">{(tracklist[selectedTrack-1] ? 'Noiva' : '')}</span>
       </div>
     </div>
   )

@@ -1,14 +1,21 @@
 #cover {
   background-image: url('../../images/Besidethepoint.jpg');
   background-size:cover;
-  width: 70vmin;
-  height:70vmin;
+  width: 65vmin;
+  height:65vmin;
 }
 
 #player_controls {
   background-color: #161616;
-  width:70vmin;
-  height:20vmin;
+  width: 65vmin;
+  height: 25vmin;
 }
 
+.album_condominium {
+  background-image: url('../../images/condominium.jpg')!important;
+}
+
+.album_besidethepoint {
+  background-image: url('../../images/Besidethepoint.jpg')!important;
+}
 
