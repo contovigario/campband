@@ -1,6 +1,5 @@
 import React from "react";
 import "../fontawesome/css/all.css";
-import "./AlbumList.css";
 
 function AlbumList(props) {
 

@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import Sideplayer from '../sideplayer/Sideplayer.js';
 import Playlist from '../playlist/Playlist.js';
 import AlbumList from '../albumlist/AlbumList.js'
+import "./Player.css";
 import { saveAs } from 'file-saver';
 import { ethers } from 'ethers'
 

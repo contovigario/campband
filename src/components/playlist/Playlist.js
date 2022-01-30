@@ -1,6 +1,5 @@
-import React, {useState} from "react";
+import React from "react";
 import "../fontawesome/css/all.css";
-import "./Playlist.css";
 
 function Playlist(props) {
 

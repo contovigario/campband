@@ -1,0 +1,324 @@
+.flex-container-v {
+  display:flex;
+  flex-wrap:nowrap;
+  flex-direction:column;
+  }
+  
+  .flex-container-h {
+  display:flex;
+  flex-wrap:nowrap;
+  flex-direction:row;
+  }
+  
+  .flex-container-h-albums {
+  display:flex;
+  flex-wrap:nowrap;
+  flex-direction:row;
+  width:100%;
+  }
+  
+  #playlist {
+  flex:1 0 auto;
+  padding-right:7vmin;
+  overflow:scroll;
+  max-height:85vmin;
+  }
+  
+  #goback {
+  width:5vmin;
+  height:5vmin;
+  background-size:contain;
+  background-repeat:no-repeat;
+  }
+  
+  #goback:hover {
+  cursor:pointer;
+  filter:brightness(1.4);
+  }
+  
+  .backsymbol {
+  background-image:url(./../../images/back.png);
+  }
+  
+  .playsymbol {
+  background-image:url(./../../images/playlist.png);
+  }
+  
+  #album_title {
+  flex:1 0 auto;
+  padding-top:4vh;
+  display:flex;
+  }
+  
+  #album_list_title {
+  flex:1 0 auto;
+  text-align:right;
+  padding-top:4vh;
+  }
+  
+  #playlist_list {
+  border-top:1px #000 solid;
+  }
+  
+  table {
+  font-family:arial,sans-serif;
+  font-size:2.2vh;
+  border-collapse:collapse;
+  width:100%;
+  }
+  
+  td {
+  text-align:left;
+  vertical-align:middle;
+  padding-bottom:1vmin;
+  padding-top:1vmin;
+  }
+  
+  .table_track_number {
+  width:10%;
+  text-align:center;
+  }
+  
+  .table_duration {
+  width:10%;
+  text-align:right;
+  padding-right:2vmin;
+  }
+  
+  .playicon {
+  display:block;
+  width:100%;
+  height:3vmin;
+  background-image:url(../../images/playbutton.png);
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  }
+  
+  #download_or_donate {
+  margin-top:3vmin;
+  max-width:fit-content;
+  }
+  
+  .float_buttons {
+  align-content:flex-end;
+  margin:2vmin;
+  height:4vmin;
+  width:4vmin;
+  cursor:pointer;
+  }
+  
+  .float_buttons:hover {
+  filter:brightness(1.2);
+  }
+  
+  #download_button {
+  background-image:url(../../images/download.png);
+  background-repeat:no-repeat;
+  background-size:contain;
+  }
+  
+  #bitcoin_button {
+  background-image:url(../../images/donate.png);
+  background-repeat:no-repeat;
+  background-size:contain;
+  }
+  
+  #blank {
+  flex:1 0 auto;
+  }
+  
+  #artist {
+  font-size:4vh;
+  color:#5e5e5e;
+  }
+  
+  #album {
+  font-size:3vh;
+  font-weight:600;
+  line-height:2vh;
+  }
+  
+  #year {
+  font-size:2vh;
+  }
+  
+  #wallet_container {
+  display:none;
+  float:right;
+  }
+  
+  #wallet {
+  background-color:#f1f1f1;
+  padding:1vmin;
+  border:1px gray solid;
+  border-radius:5px;
+  color:#000;
+  margin-left:2vmin;
+  }
+  
+  .other_wallets {
+  background-color:#f1f1f1;
+  padding:1vmin;
+  border:1px gray solid;
+  border-radius:5px;
+  color:#000;
+  margin-left:2vmin;
+  }
+  
+  .div_ow {
+  height:6vmin;
+  font-weight:500;
+  color:#3d3d3d;
+  }
+  
+  .wallet_visible {
+  display:block!important;
+  }
+  
+  #meta_error {
+  display:none;
+  text-align:right;
+  }
+  
+  .error_visible {
+  display:block!important;
+  }
+  
+  #my_buttons {
+  display:flex;
+  justify-content:flex-end;
+  }
+  
+  .track_num {
+  display:block;
+  }
+  
+  .playicon {
+  display:none;
+  }
+  
+  tr {
+  cursor:pointer;
+  }
+  
+  .track_row:hover {
+  background-color:#f1f1f1;
+  }
+  
+  .track_row:hover .playicon,.track_row.selected .playicon {
+  display:block;
+  }
+  
+  .track_row:hover .track_num,.track_row.selected .track_num {
+  display:none;
+  }
+  
+  #goback:hover {
+  cursor:pointer;
+  filter:brightness(1.4);
+  }
+  
+  #album_info {
+  flex:1 0 auto;
+  height:12vmin;
+  padding-right:2vmin;
+  text-align:right;
+  }
+  
+  #album_cover {
+  flex:0 0 12vmin;
+  height:12vmin;
+  background-image:url(../../images/white.JPG);
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:right;
+  }
+  
+  #metamask_button {
+  background-image:url(../../images/metamask.png);
+  background-size:contain;
+  background-repeat:no-repeat;
+  }
+  
+  .crypto_name {
+  display:inline-block;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  }
+  
+  .invisible {
+  display:none!important;
+  }
+  
+  #album_list_container {
+  display:block;
+  width:100%;
+  max-height:67vmin;
+  overflow:scroll;
+  }
+  
+  #album_list {
+  border-top:1px #000 solid;
+  display:flex;
+  flex-wrap:wrap;
+  }
+  
+  .albumInList {
+  flex:50%;
+  max-width:50%;
+  padding-left:2.5%;
+  padding-top:2.5%;
+  }
+  
+  .squareAlbum {
+  width:100%;
+  background-size:contain;
+  background-repeat:no-repeat;
+  padding-bottom:100%;
+  cursor:pointer;
+  }
+  
+  .squareAlbum:hover {
+  box-shadow:rgba(230,230,230,1) -2px -3px 5px;
+  }
+  
+  .album_condominium {
+  background-image:url(../../images/condominium.jpg);
+  }
+  
+  .album_besidethepoint {
+  background-image:url(../../images/Besidethepoint.jpg);
+  }
+  
+  ::-webkit-scrollbar {
+  width:4px;
+  margin-right:1px;
+  }
+  
+  ::-webkit-scrollbar-track {
+  background:#fff;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+  background:#161616;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+  background:#2b2b2b;
+  }
+  
+  .a_name {
+  color:#2b2b2b;
+  font-size:2.2vmin;
+  font-weight:500;
+  }
+  
+  .a_year {
+  color:#777;
+  padding-left:1vmin;
+  font-size:1.8vmin;
+  font-weight:400;
+  }
