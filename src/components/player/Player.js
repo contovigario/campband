@@ -3,10 +3,10 @@ import React, {useState, useEffect} from 'react';
 import Sideplayer from '../sideplayer/Sideplayer.js';
 import Playlist from '../playlist/Playlist.js';
 import AlbumList from '../albumlist/AlbumList.js'
-import "./Player.css";
 import { saveAs } from 'file-saver';
-import { ethers } from 'ethers'
-
+import { ethers } from 'ethers';
+import { isMobile } from 'react-device-detect';
+import jszip from  'jszip';
 
 //Audio sources
 import a_captainAlex from '../../audio/Condominium/01 - Captain Alex.mp3'
@@ -16,6 +16,14 @@ import a_alma from '../../audio/Condominium/04 - Alma.mp3'
 
 import a_explosive from '../../audio/Beside the point/explosive.mp3'
 import a_fast from '../../audio/Beside the point/fast.mp3'
+
+//Cover files
+import condominium_cover from '../../images/covers/condominium.jpg'
+import besidethepoint_cover from '../../images/covers/Besidethepoint.jpg'
+
+//CSS
+import "./Player.css";
+import "./Covers.css";
 
 function Player() {
 
@@ -27,6 +35,99 @@ function Player() {
     const [selectedAlbum, setSelectedAlbum] = useState(0);
     const [walletVisible, setWalletVisible] = useState(false);
     const [metaError, setMetaError] = useState(false);
+
+    const albums = [
+        {
+            id: 1,
+            name: 'Condominium',
+            cover: 'album_condominium',
+            coverFile: condominium_cover,
+            year: 2020,
+            tracklist:
+            [
+                {
+                    id:1,
+                    name: "Captain Alex",
+                    duration: "2:53",
+                    file: a_captainAlex,
+                    selected:false
+                },
+                {
+                    id:2,
+                    name: "Foregin",
+                    duration: "3:19",
+                    file: a_foreign,
+                    selected:false
+                },
+                {
+                    id:3,
+                    name: "Packt Like",
+                    duration: "3:06",
+                    file: a_packtLike,
+                    selected:false
+                },
+                {
+                    id:4,
+                    name: "Alma",
+                    duration: "3:59",
+                    file: a_alma,
+                    selected:false
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: 'Beside the point',
+            cover: 'album_besidethepoint',
+            coverFile: besidethepoint_cover,
+            year: 2022,
+            tracklist:
+            [
+                {
+                    id:1,
+                    name: "Export yourself",
+                    duration: "2:50",
+                    file: a_explosive,
+                    selected:false
+                },
+                {
+                    id:2,
+                    name: "F is for",
+                    duration: "0:21",
+                    file: a_fast,
+                    selected:false
+                }
+            ]
+        }
+    ]
+
+    const crypto_wallets = [
+        {
+            id: 1,
+            network: 'BTC',
+            address: '0xee226379db83cffc681495730c11fdde79ba4c0c'
+        },
+        {
+            id: 2,
+            network: 'BNB',
+            address: '0xee226379db83cffc681495730c11fdde79ba4c0c'
+        },
+        {
+            id: 3,
+            network: 'ETH',
+            address: '0xee226379db83cffc681495730c11fdde79ba4c0c'
+        },
+        {
+            id: 4,
+            network: 'ADA',
+            address: '0xee226379db83cffc681495730c11fdde79ba4c0c'
+        },
+        {
+            id: 5,
+            network: 'DOGE',
+            address: '0xee226379db83cffc681495730c11fdde79ba4c0c'
+        }
+    ]
 
     const showManualWallet = () => {
         if(!walletVisible) {
@@ -79,76 +180,32 @@ function Player() {
         setSelectedTrack(trackid);
     }
 
-    const saveFile = () => {
-        if(albums[selectedViewAlbum-1]) {
-            albums[selectedViewAlbum-1].tracklist.forEach(song => {
-                saveAs(song.file, song.id + ' - ' + song.name + '.mp3');
-            });
+    const downloadAlbum = () => {
+        console.log('onclick download');
+        if(!isMobile) {
+            if(albums[selectedViewAlbum-1]) {
+
+                var zippedFile = new jszip();
+                zippedFile.folder(albums[selectedViewAlbum-1].name);
+
+                albums[selectedViewAlbum-1].tracklist.forEach(track => {
+                    zippedFile.file(albums[selectedViewAlbum-1].name + '/' + track.name + '.mp3', track.file);
+                })
+                
+                zippedFile.file(albums[selectedViewAlbum-1].name + "/" + "cover.jpg", albums[selectedViewAlbum-1].coverFile);
+                zippedFile.generateAsync({type:"blob"}).then(function(content) {
+                    saveAs(content, albums[selectedViewAlbum-1].name + ".zip");
+                });
+            }
+        }
+        else {
+            if(albums[selectedViewAlbum-1]) {
+                albums[selectedViewAlbum-1].tracklist.forEach(song => {
+                    saveAs(song.file, song.id + ' - ' + song.name + '.mp3');
+                });
+            }
         }
     }
-
-    const albums = [
-        {
-            id: 1,
-            name: 'Condominium',
-            cover: 'album_condominium',
-            year: 2020,
-            tracklist:
-            [
-                {
-                    id:1,
-                    name: "Captain Alex",
-                    duration: "2:53",
-                    file: a_captainAlex,
-                    selected:false
-                },
-                {
-                    id:2,
-                    name: "Foregin",
-                    duration: "3:19",
-                    file: a_foreign,
-                    selected:false
-                },
-                {
-                    id:3,
-                    name: "Packt Like",
-                    duration: "3:06",
-                    file: a_packtLike,
-                    selected:false
-                },
-                {
-                    id:4,
-                    name: "Alma",
-                    duration: "3:59",
-                    file: a_alma,
-                    selected:false
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: 'Beside the point',
-            cover: 'album_besidethepoint',
-            year: 2022,
-            tracklist:
-            [
-                {
-                    id:1,
-                    name: "Export yourself",
-                    duration: "2:50",
-                    file: a_explosive,
-                    selected:false
-                },
-                {
-                    id:2,
-                    name: "F is for",
-                    duration: "0:21",
-                    file: a_fast,
-                    selected:false
-                }
-            ]
-        }
-    ]
 
     const changeTracklist = (selectedViewAlbum, albums) => {
         console.log('Player - changeTracklist - triggered by AlbumList ')
@@ -175,11 +232,12 @@ function Player() {
                     selectedViewAlbum = {selectedViewAlbum} />
             ) : (
                 <Playlist 
+                    crypto_wallets = {crypto_wallets}
                     metaError = {metaError}
                     showManualWallet = {showManualWallet}
                     walletVisible = {walletVisible}
                     showWallet = {showWallet}
-                    saveFile={saveFile}
+                    downloadAlbum={downloadAlbum}
                     albums = {albums}
                     selectedViewAlbum = {selectedViewAlbum}
                     selectedAlbum = {selectedAlbum}

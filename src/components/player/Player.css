@@ -100,30 +100,6 @@
   max-width:fit-content;
   }
   
-  .float_buttons {
-  align-content:flex-end;
-  margin:2vmin;
-  height:4vmin;
-  width:4vmin;
-  cursor:pointer;
-  }
-  
-  .float_buttons:hover {
-  filter:brightness(1.2);
-  }
-  
-  #download_button {
-  background-image:url(../../images/download.png);
-  background-repeat:no-repeat;
-  background-size:contain;
-  }
-  
-  #bitcoin_button {
-  background-image:url(../../images/donate.png);
-  background-repeat:no-repeat;
-  background-size:contain;
-  }
-  
   #blank {
   flex:1 0 auto;
   }
@@ -140,12 +116,22 @@
   }
   
   #year {
-  font-size:2vh;
+  font-size:2vmin;
+  }
+
+  .smaller_text {
+  font-size:1.6vmin;
+  padding-left:1vmin;
+  }
+
+  .smaller_bold {
+  font-weight: 700;
   }
   
   #wallet_container {
   display:none;
   float:right;
+  margin-top: 5vmin;
   }
   
   #wallet {
@@ -170,6 +156,7 @@
   height:6vmin;
   font-weight:500;
   color:#3d3d3d;
+  text-align: right;
   }
   
   .wallet_visible {
@@ -179,15 +166,11 @@
   #meta_error {
   display:none;
   text-align:right;
+  margin-top:2vmin;
   }
   
   .error_visible {
   display:block!important;
-  }
-  
-  #my_buttons {
-  display:flex;
-  justify-content:flex-end;
   }
   
   .track_num {
@@ -234,13 +217,7 @@
   background-repeat:no-repeat;
   background-position:right;
   }
-  
-  #metamask_button {
-  background-image:url(../../images/metamask.png);
-  background-size:contain;
-  background-repeat:no-repeat;
-  }
-  
+
   .crypto_name {
   display:inline-block;
   -webkit-user-select:none;
@@ -285,14 +262,6 @@
   box-shadow:rgba(230,230,230,1) -2px -3px 5px;
   }
   
-  .album_condominium {
-  background-image:url(../../images/condominium.jpg);
-  }
-  
-  .album_besidethepoint {
-  background-image:url(../../images/Besidethepoint.jpg);
-  }
-  
   ::-webkit-scrollbar {
   width:4px;
   margin-right:1px;
@@ -322,3 +291,54 @@
   font-size:1.8vmin;
   font-weight:400;
   }
+
+#my_buttons {
+  display:flex;
+  justify-content:flex-end;
+  margin-top:4vmin;
+  cursor: pointer;
+}
+
+.float_buttons {
+    flex: 0 0 auto;
+    display: flex;
+    background-color: white;
+    color: #3e3e3e;
+    border: 1px solid #3e3e3e;
+    border-radius: 0.6vmin;
+    padding: 0 2vmin;
+    margin-left: 2vmin;
+    font-size:1.8vmin;
+    line-height: 1.8vmin;
+}
+
+.float_buttons:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.my_buttons_text {
+  padding:0.8vmin;
+  text-align: center;
+  width: 100%;
+}
+
+#download_icon, #wallet_icon, #metamask_icon {
+  width:3vmin;
+  height:3vmin;
+  margin: 0.3vmin;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#download_icon {
+  background-image:url('../../images/download.png');
+}
+
+#wallet_icon {
+  background-image:url('../../images/wallet.png');
+}
+
+#metamask_icon {
+  background-image:url('../../images/metamask.png');
+}

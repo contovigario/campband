@@ -50,42 +50,38 @@ function Playlist(props) {
                 </table>
                 <div id="download_or_donate">
                     My music is free anywhere. <br></br>
-                    You can download this album below and support this project
-                    by donating bitcoin or any other crypto through MetaMask.
+                    Download this album below and help support this project
+                    by donating crypto. 
+                    <span className="smaller_text">
+                        (<span className="smaller_bold">View Wallets</span> or <span className="smaller_bold">MetaMask</span>)
+                    </span>
                 </div>
                 <div id="my_buttons">
-                    <div id="download_button" className="float_buttons" 
-                        onClick={() => props.saveFile()}></div>
-                    <div id="bitcoin_button" className="float_buttons" onClick={props.showManualWallet}></div>
-                    <div id="metamask_button" className="float_buttons" onClick={props.showWallet}></div>
+                    <div id="download_button" className="float_buttons" onClick={() => props.downloadAlbum()}>
+                        <div id="download_icon"></div>
+                        <div className="my_buttons_text">DOWNLOAD</div>
+                    </div>
+                    <div id="bitcoin_button" className="float_buttons" onClick={props.showManualWallet}>
+                        <div id="wallet_icon"></div>
+                        <div className="my_buttons_text">VIEW WALLETS</div>
+                    </div>
+                    <div id="metamask_button" className="float_buttons" onClick={props.showWallet}>
+                        <div id="metamask_icon"></div>
+                        <div className="my_buttons_text">CONNECT</div>
+                    </div>
                 </div>
                 <div>
                     <div id="wallet_container" className={props.walletVisible ? 'wallet_visible' : ''}>
-                        <div className="div_ow">
-                            <div className="crypto_name">BTC</div>
-                            <code id="wallet">0xee226379db83cffc681495730c11fdde79ba4c0c</code>
+                    {props.crypto_wallets.map((wlt) => (
+                        <div className="div_ow" key={wlt.id}>
+                            <div className="crypto_name">{wlt.network}</div>
+                            <code className="other_wallets">{wlt.address}</code>
                         </div>
+                    ))}
                     </div>
                     <div id="meta_error" className={props.metaError ? 'error_visible' : ''}>
                         You don't have MetaMask installed. <br></br>
-                        But here are my addresses:<br></br><br></br>
-                        <div className="div_ow">
-                            <div className="crypto_name">BNB</div>
-                            <code className="other_wallets">0xC2fd774A73e8EAB5B55F5f50207cDF535e088419</code>
-                        </div>
-                        <div className="div_ow">
-                            <div className="crypto_name">ETH</div>
-                            <code className="other_wallets">0xC2fd774A73e8EAB5B55F5f50207cDF535e088419</code>
-                        </div>
-                        <div className="div_ow">
-                            <div className="crypto_name">ADA</div>
-                            <code className="other_wallets">0xC2fd774A73e8EAB5B55F5f50207cDF535e088419</code>
-                        </div>
-                        <div className="div_ow">
-                            <div className="crypto_name">DOGE</div>
-                            <code className="other_wallets">0xC2fd774A73e8EAB5B55F5f50207cDF535e088419</code>
-                        </div>
-                    </div>                                    
+                    </div>                          
                 </div>
             </div>
         </div>
