@@ -23,7 +23,9 @@ function AlbumList(props) {
     return (
         <div className="flex-container-v" id="playlist">
             <div className="flex-container-h">
-                <div id="goback" onClick = {() => { setMenuSelected() }} className="playsymbol"></div>
+                <div id="goback" 
+                    className={props.selectedViewAlbum!==0 ? 'playsymbol' : 'invisible'}
+                    onClick = {() => { setMenuSelected() }}></div>
                 <div id="album_title">
                     <div id="album_info">
                         <div id="artist">Noiva</div>

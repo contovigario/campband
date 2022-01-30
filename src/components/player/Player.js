@@ -170,7 +170,8 @@ function Player() {
                     albums = {albums}
                     changeTracklist = {changeTracklist}
                     setMenuSelected = {setMenuSelected}
-                    menuSelected = {menuSelected} />
+                    menuSelected = {menuSelected} 
+                    selectedViewAlbum = {selectedViewAlbum} />
             ) : (
                 <Playlist 
                     metaError = {metaError}
