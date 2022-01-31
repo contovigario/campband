@@ -35,6 +35,49 @@ function Player() {
     const [selectedAlbum, setSelectedAlbum] = useState(0);
     const [walletVisible, setWalletVisible] = useState(false);
     const [metaError, setMetaError] = useState(false);
+    const [metaMaskButton, setMetaMaskButton] = useState(0);
+    const [metaMenuOpened, setMetaMenuOpened] = useState(false);
+    const [networkOpened, setNetworkOpened] = useState(false);
+    const [networkMenuSelected, setNetworkMenuSelected] = useState(0);
+    const [networkChangeState, setNetworkChangeState] = useState(0)
+
+    const networkMenu = [
+        {
+            id: 0,
+            name: 'CHOOSE COIN',
+            chainId: ''
+        },
+        {
+            id: 1,
+            name: 'ETHEREUM',
+            chainId: '0x1'
+        },
+        {
+            id: 2,
+            name: 'BINANCE COIN',
+            chainId: '0x38'
+        },
+        {
+            id: 3,
+            name: 'DOGECOIN',
+            chainId: ''
+        }
+    ]    
+
+    const metaMaskButtonStates = [
+        {
+            code: 0,
+            text: `CONNECT`
+        },
+        {
+            code: 1,
+            text: `CONNECTING...`
+        },
+        {
+            code: 2,
+            text: `METAMASK`
+        },
+    ]
 
     const albums = [
         {
@@ -49,29 +92,25 @@ function Player() {
                     id:1,
                     name: "Captain Alex",
                     duration: "2:53",
-                    file: a_captainAlex,
-                    selected:false
+                    file: a_captainAlex
                 },
                 {
                     id:2,
                     name: "Foregin",
                     duration: "3:19",
-                    file: a_foreign,
-                    selected:false
+                    file: a_foreign
                 },
                 {
                     id:3,
                     name: "Packt Like",
                     duration: "3:06",
-                    file: a_packtLike,
-                    selected:false
+                    file: a_packtLike
                 },
                 {
                     id:4,
                     name: "Alma",
                     duration: "3:59",
-                    file: a_alma,
-                    selected:false
+                    file: a_alma
                 }
             ]
         },
@@ -87,15 +126,13 @@ function Player() {
                     id:1,
                     name: "Export yourself",
                     duration: "2:50",
-                    file: a_explosive,
-                    selected:false
+                    file: a_explosive
                 },
                 {
                     id:2,
                     name: "F is for",
                     duration: "0:21",
-                    file: a_fast,
-                    selected:false
+                    file: a_fast
                 }
             ]
         }
@@ -130,30 +167,70 @@ function Player() {
     ]
 
     const showManualWallet = () => {
+        setNetworkOpened(false)
         if(!walletVisible) {
             setWalletVisible(true);
             setMetaError(false);
+            setMetaMenuOpened(false)
         }
         else {
             setWalletVisible(false);
         }
     }
+    const changeNetworkOpened = () => {
+        if(networkOpened) {
+            setNetworkOpened(false)
+            console.log('close')
+        }
+        else {
+            setNetworkOpened(true)
+            console.log('open')
+        }
+    }
 
     const showWallet = async () => {
         try { 
-            if(!window.ethereum) {
-                console.log('no eth wallet')
-                setWalletVisible(false);
-                if(!metaError) {
-                    setMetaError(true);
+            setWalletVisible(false);
+            console.log('showWallet')
+            console.log('metaMenuOpened: ' + metaMenuOpened)
+            if(metaMenuOpened) {
+                setMetaMenuOpened(false)
+                setNetworkOpened(false)
+            }
+            else {
+                setMetaMenuOpened(true)
+            }
+            console.log('metaMenuOpened changed to: ' + metaMenuOpened)
+            if(metaMaskButton !== 2) {
+                if(!window.ethereum) {
+                    console.log('no metamask')
+                    setMetaMaskButton(0)
+                    setWalletVisible(false);
+                    if(!metaError) {
+                        setMetaError(true);
+                    }
+                    else {
+                        setMetaError(false);
+                    }
                 }
                 else {
                     setMetaError(false);
+                    setMetaMaskButton(1)
+                    console.log('connecting')
+                    await window.ethereum.send('eth_requestAccounts')
+                    setMetaMaskButton(2)
+                    console.log('connected')
                 }
             }
-            else {
-                setMetaError(false);
-                await window.ethereum.send('eth_requestAccounts')
+        } catch(err) {
+            if(err.code === 4001)
+                setMetaMaskButton(0)
+            console.log(err)
+        }
+    }
+
+    /*
+    console.log(metaMask)
                 ethers.utils.getAddress('0xC2fd774A73e8EAB5B55F5f50207cDF535e088419')
                 const provider = new ethers.providers.Web3Provider(window.ethereum)
                 const signer = provider.getSigner()
@@ -167,21 +244,15 @@ function Player() {
                     value: ethers.utils.parseEther('0.01')
                 })
                 console.log(tx)
-            }
-        } catch(err) {
-            console.log(err)
-        }
-    }
+    */
 
     const selectTrack = (trackid) => {
-        console.log('select track from ' + selectedTrack + ' to ' + trackid)
         setLoopAudios(false);
         setSelectedAlbum(selectedViewAlbum);
         setSelectedTrack(trackid);
     }
 
     const downloadAlbum = () => {
-        console.log('onclick download');
         if(!isMobile) {
             if(albums[selectedViewAlbum-1]) {
 
@@ -207,8 +278,30 @@ function Player() {
         }
     }
 
+    const changeNetworkMenu = async (id) => {
+        try {
+            setNetworkOpened(false)
+            if(networkMenuSelected!==id) {
+                if(networkChangeState===0 || networkChangeState===2) {
+                    setNetworkChangeState(1)
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    const signer = provider.getSigner()
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId:  networkMenu[networkMenuSelected+1].chainId }]
+                    });
+                    setNetworkMenuSelected(id)
+                    setNetworkChangeState(2)
+                }
+            }
+        }
+        catch(error) {
+            console.log(error)
+            setNetworkChangeState(0)
+        }
+    }
+
     const changeTracklist = (selectedViewAlbum, albums) => {
-        console.log('Player - changeTracklist - triggered by AlbumList ')
         setTracklist(albums[selectedViewAlbum-1].tracklist)
         setSelectedViewAlbum(selectedViewAlbum);
     }
@@ -232,8 +325,17 @@ function Player() {
                     selectedViewAlbum = {selectedViewAlbum} />
             ) : (
                 <Playlist 
+                    networkChangeState = {networkChangeState}
+                    networkMenu = {networkMenu}
+                    networkOpened = {networkOpened}
+                    networkMenuSelected = {networkMenuSelected}
+                    changeNetworkOpened = {changeNetworkOpened}
+                    changeNetworkMenu = {changeNetworkMenu}
+                    metaMaskButtonStates = {metaMaskButtonStates}
+                    metaMaskButton = {metaMaskButton}
                     crypto_wallets = {crypto_wallets}
                     metaError = {metaError}
+                    metaMenuOpened = {metaMenuOpened}
                     showManualWallet = {showManualWallet}
                     walletVisible = {walletVisible}
                     showWallet = {showWallet}

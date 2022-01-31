@@ -6,16 +6,13 @@ function AlbumList(props) {
     const setMenuSelected = (() => {
         if(props.menuSelected) {
             props.setMenuSelected(false)
-            console.log('setMenuSelected from ' + props.menuSelected + ' to ' + String(false))
         }
         else {
             props.setMenuSelected(true)
-            console.log('setMenuSelected from ' + props.menuSelected + ' to ' + String(true))
         }
     })
 
     const seeAlbum = ((albumid) => {
-        console.log('seeAlbum ' + albumid)
         props.changeTracklist(albumid, props.albums)
     })
 

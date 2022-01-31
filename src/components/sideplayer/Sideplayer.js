@@ -24,25 +24,21 @@ function Sideplayer(props) {
   }
 
   const play = () => {
-    console.log('Sideplayer - play() - triggered by audio loading / clicking controls')
     const audio = audioRef.current
     audio.volume = 0.5
 
     switch(props.selectedTrack) {
       case 0:
       case -1:
-        console.log('case 0')
         props.selectTrack(1)
         break;
       default:
         if (!isPlaying || (isPlaying && !props.loopAudios)) {
-          console.log('play ' + String(isPlaying) + '-' + String(props.loopAudios))
           setIsPlaying(true)
           audio.play()
           props.setLoopAudios(true)
         }
         else if (isPlaying) {
-          console.log('pause ' + String(isPlaying) + '-' + String(props.loopAudios))
           setIsPlaying(false)
           audio.pause()
         }
@@ -61,15 +57,12 @@ function Sideplayer(props) {
   }
 
   useEffect(() => {
-    console.log('Sideplayer - useEffect - triggered by props.selectedTrack')
     switch(props.selectedTrack) {
       case 0:
-        console.log('case 0')
         setAudioSource(0);
         setIsLoading(false)
         break;
       case -1:
-        console.log('case -1')
         setIsLoading(false)
         setIsPlaying(false)
         setPercentage(0)
@@ -89,9 +82,7 @@ function Sideplayer(props) {
   }, [props.selectedTrack, props.selectedAlbum])
   
   useEffect (() => {
-    console.log('Sideplayer - useEffect - triggered by percentage, props')
     if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {
-        console.log('autoNEXT')
         props.setLoopAudios(false);
         props.selectTrack(
           (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack] ? 
@@ -101,15 +92,7 @@ function Sideplayer(props) {
     }
   }, [percentage, props])
 
-  useEffect (() => {
-    console.log('Sideplayer - useEffect - triggered by props.selectedViewAlbum')
-    if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {
-        console.log('changed selectedViewAlbum')
-    }
-  }, [props.selectedViewAlbum])
-
   const nextTrack = () => {
-    console.log('Sideplayer - nextTrack - triggered by clicking next')
     props.selectTrack(
       (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack] ? 
         (props.selectedTrack+1) : 
@@ -118,7 +101,6 @@ function Sideplayer(props) {
   }
 
   const prevTrack = () => {
-    console.log('Sideplayer - nextTrack - triggered by clicking previous')
     props.selectTrack(
       (props.albums[props.selectedAlbum-1].tracklist[props.selectedTrack-2] ? 
         (props.selectedTrack-1) : 
@@ -160,10 +142,8 @@ function Sideplayer(props) {
                 ref={audioRef}
                 onTimeUpdate={getCurrDuration}
                 onLoadedData={(e) => {
-                  console.log('isLoading: ' + isLoading)
                   setDuration(e.currentTarget.duration)
                   if(isLoading) {
-                    console.log('onloadeddata: ' + props.selectedTrack)
                     setIsLoading(false)
                     play()
                   }

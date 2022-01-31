@@ -4,7 +4,6 @@ import "../fontawesome/css/all.css";
 function Playlist(props) {
 
     const setMenuSelected = (() => {
-        console.log('Playlist - setMenuSelected - triggered by clicking menu ')
         props.setMenuSelected(true)
     })
 
@@ -61,15 +60,43 @@ function Playlist(props) {
                         <div id="download_icon"></div>
                         <div className="my_buttons_text">DOWNLOAD</div>
                     </div>
-                    <div id="bitcoin_button" className="float_buttons" onClick={props.showManualWallet}>
+                    <div id="bitcoin_button" className={props.walletVisible ? "float_buttons button_selected" : "float_buttons"} onClick={props.showManualWallet}>
                         <div id="wallet_icon"></div>
                         <div className="my_buttons_text">VIEW WALLETS</div>
                     </div>
-                    <div id="metamask_button" className="float_buttons" onClick={props.showWallet}>
+                    <div id="metamask_button" 
+                        className={(props.metaMaskButton===1 ? "float_buttons blocked" : ((props.metaMaskButton===2 && props.metaMenuOpened) ? "float_buttons button_selected" : "float_buttons"))} 
+                        onClick={props.showWallet}>
                         <div id="metamask_icon"></div>
-                        <div className="my_buttons_text">CONNECT</div>
+                        <div className="my_buttons_text">{props.metaMaskButtonStates[props.metaMaskButton].text}
+                        </div>
                     </div>
                 </div>
+                
+                {((props.metaMaskButton && props.metaMenuOpened) ? (props.metaMaskButton===2 ?
+                <div>
+                    <div id="my_buttons_network">
+                        <div id="network_button" className={props.networkChangeState === 1 ? "float_buttons blocked" : (props.networkChangeState === 2 ? "float_buttons button_selected" :"float_buttons")} >
+                            <div className="my_buttons_text"
+                                onClick={props.changeNetworkOpened}>
+                                {props.networkMenu[props.networkMenuSelected].name}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dropdowner" className={(props.networkOpened ? "visibile" : "")}>
+                        {props.networkMenu.map((network) => (
+                            (network.id>0 ?
+                                <div className="dropdowners" 
+                                    key={network.id} 
+                                    onClick={() => {props.changeNetworkMenu(network.id)}}>
+                                        {network.name}
+                                </div>
+                            : "")
+                        ))}
+                    </div>
+                </div>
+                : "" ) : "")}
+                
                 <div>
                     <div id="wallet_container" className={props.walletVisible ? 'wallet_visible' : ''}>
                     {props.crypto_wallets.map((wlt) => (
