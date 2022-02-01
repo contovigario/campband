@@ -180,6 +180,18 @@
   .playicon {
   display:none;
   }
+
+  /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
   
   tr {
   cursor:pointer;
@@ -302,7 +314,6 @@
 #my_buttons_network {
   display:flex;
   justify-content:flex-end;
-  margin-top:4vmin;
   cursor: pointer;
 }
 
@@ -341,7 +352,7 @@
 
 #network_button {
   width:19vmin;
-  padding:0.1vmin 0.5vmin;
+  padding:0.2vmin 0.5vmin
 }
 
 .visibile {
@@ -349,6 +360,7 @@
 }
 
 #dropdowner {
+  position: relative;
   float:right;
   margin-top: -1px;
   width:19vmin;
@@ -357,11 +369,14 @@
   border-top:none;
   border-radius: 0.6vmin;
   display:none;
+  z-index:5;
 }
 
 .dropdowners {
+  position: relative;
   color: #3e3e3e;
   border-top: 1px solid #3e3e3e;
+  background-color:white;
   padding: 1vmin 2vmin;
   font-size:1.8vmin;
   line-height: 1.8vmin;
@@ -369,13 +384,65 @@
   width:100%;
   height:3.8vmin;
   cursor:pointer;
+  z-index:5;
 }
 
 .dropdowners:hover {
   background-color: rgb(223, 223, 223);
 }
 
+#network_container {
+  float:right;
+}
+
+#ammount_container {
+  display:none;
+  margin-left: 2vmin;
+}
+
+#ammount {
+  position: relative;
+  float:right;
+  width: 15vmin;
+  color: #3e3e3e;
+  border: 1px solid #3e3e3e;
+  border-radius: 0.6vmin;
+  border-right: none;
+  z-index: 0;
+  height:4vmin;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  font-size: 1.8vmin;
+  line-height: 1.8vmin;
+  text-align: right;
+  padding-right: 1vmin;
+}
+
+#ammountCurrency {
+  float:right;
+  width:5vmin;
+  height:4vmin;
+  text-align: center;
+  border: 1px solid #3e3e3e;
+  border-radius: 0.6vmin;
+  background-color:rgb(223, 223, 223);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-size: 1.8vmin;
+  line-height: 1.8vmin;
+  padding-top: 0.9vmin;
+}
+
 #download_icon, #wallet_icon, #metamask_icon {
+  width:3vmin;
+  height:3vmin;
+  margin: 0.3vmin;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#send_button {
   width:3vmin;
   height:3vmin;
   margin: 0.3vmin;
@@ -394,4 +461,20 @@
 
 #metamask_icon {
   background-image:url('../../images/metamask.png');
+}
+
+#send_donation_button {
+  display:none;
+  width: 19vmin;
+  height: 4vmin;
+  float: right;
+  padding-top: 1vmin;
+  text-align: center;
+}
+
+#extra_buttons {
+  display:flex;
+  justify-content:flex-end;
+  margin-top:4vmin;
+  cursor: pointer;
 }

@@ -72,30 +72,44 @@ function Playlist(props) {
                         </div>
                     </div>
                 </div>
-                
+
+                <div id="extra_buttons">
+
                 {((props.metaMaskButton && props.metaMenuOpened) ? (props.metaMaskButton===2 ?
-                <div>
-                    <div id="my_buttons_network">
-                        <div id="network_button" className={props.networkChangeState === 1 ? "float_buttons blocked" : (props.networkChangeState === 2 ? "float_buttons button_selected" :"float_buttons")} >
-                            <div className="my_buttons_text"
-                                onClick={props.changeNetworkOpened}>
-                                {props.networkMenu[props.networkMenuSelected].name}
+                    <div id="network_container">
+                        <div id="my_buttons_network">
+                            <div id="network_button" className={props.networkChangeState === 1 ? "float_buttons blocked" : (props.networkChangeState === 2 ? "float_buttons button_selected" :"float_buttons")} >
+                                <div className="my_buttons_text"
+                                    onClick={props.changeNetworkOpened}>
+                                    {props.networkMenu[props.networkMenuSelected].name}
+                                </div>
                             </div>
                         </div>
+                        <div id="dropdowner" className={(props.networkOpened ? "visibile" : "")}>
+                            {props.networkMenu.map((network) => (
+                                (network.id>0 ?
+                                    <div className="dropdowners" 
+                                        key={network.id} 
+                                        onClick={() => {props.changeNetworkMenu(network.id)}}>
+                                            {network.name}
+                                    </div>
+                                : "")
+                            ))}
+                        </div>
                     </div>
-                    <div id="dropdowner" className={(props.networkOpened ? "visibile" : "")}>
-                        {props.networkMenu.map((network) => (
-                            (network.id>0 ?
-                                <div className="dropdowners" 
-                                    key={network.id} 
-                                    onClick={() => {props.changeNetworkMenu(network.id)}}>
-                                        {network.name}
-                                </div>
-                            : "")
-                        ))}
+                    : "" ) : "")}
+
+                    <div id="ammount_container" className={(props.metaMaskButton && props.metaMenuOpened && props.networkChangeState === 2) ?  "wallet_visible" : ""}>
+                        <span id="ammountCurrency">{props.networkMenu[props.networkMenuSelected].acro}</span>
+                        <input id="ammount" type="number" value={props.ammount} onChange={props.changeAmmount}/>
+                    </div>
+
+                    <div id="send_donation_button" 
+                        className={(props.metaMaskButton && props.metaMenuOpened && props.networkChangeState === 2) ?  (props.sendEnabled === 1 || props.sendEnabled === 2 ? "wallet_visible float_buttons selected" : "wallet_visible float_buttons blocked") : ""}
+                        onClick={props.sendDonation}>
+                        {props.sendDonationStates[props.sendEnabled].text}
                     </div>
                 </div>
-                : "" ) : "")}
                 
                 <div>
                     <div id="wallet_container" className={props.walletVisible ? 'wallet_visible' : ''}>

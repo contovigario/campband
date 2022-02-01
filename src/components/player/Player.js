@@ -40,27 +40,37 @@ function Player() {
     const [networkOpened, setNetworkOpened] = useState(false);
     const [networkMenuSelected, setNetworkMenuSelected] = useState(0);
     const [networkChangeState, setNetworkChangeState] = useState(0)
+    const [ammount, setAmmount] = useState(0.00000)
+    const [sendEnabled, setSendEnabled] = useState(0)
 
     const networkMenu = [
         {
             id: 0,
             name: 'CHOOSE COIN',
-            chainId: ''
+            acro: '',
+            chainId: '',
+            address: ''
         },
         {
             id: 1,
             name: 'ETHEREUM',
-            chainId: '0x1'
+            acro: 'ETH',
+            chainId: '0x1',
+            address: '0xC2fd774A73e8EAB5B55F5f50207cDF535e088419'
         },
         {
             id: 2,
             name: 'BINANCE COIN',
-            chainId: '0x38'
+            acro: 'BNB',
+            chainId: '0x38',
+            address: '0xC2fd774A73e8EAB5B55F5f50207cDF535e088419'
         },
         {
             id: 3,
             name: 'DOGECOIN',
-            chainId: ''
+            acro: 'DOGE',
+            chainId: '',
+            address: '0xC2fd774A73e8EAB5B55F5f50207cDF535e088419'
         }
     ]    
 
@@ -76,6 +86,25 @@ function Player() {
         {
             code: 2,
             text: `METAMASK`
+        },
+    ]
+
+    const sendDonationStates = [
+        {
+            code: 0,
+            text: `SEND DONATION`
+        },
+        {
+            code: 1,
+            text: `SEND DONATION`
+        },
+        {
+            code: 2,
+            text: `SENDING...`
+        },
+        {
+            code: 3,
+            text: `THANK YOU!`
         },
     ]
 
@@ -166,6 +195,16 @@ function Player() {
         }
     ]
 
+    const changeAmmount = e => {
+        setAmmount(e.target.value)
+        if(e.target.value>0) {
+            setSendEnabled(1)
+        }
+        else {
+            setSendEnabled(0)
+        }
+    }
+
     const showManualWallet = () => {
         setNetworkOpened(false)
         if(!walletVisible) {
@@ -177,6 +216,7 @@ function Player() {
             setWalletVisible(false);
         }
     }
+
     const changeNetworkOpened = () => {
         if(networkOpened) {
             setNetworkOpened(false)
@@ -185,6 +225,31 @@ function Player() {
         else {
             setNetworkOpened(true)
             console.log('open')
+        }
+    }
+
+    const sendDonation = async () => {
+        if(sendEnabled===1) {
+            setSendEnabled(2)
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            console.log("---------- TRANSACTION ----------")
+            console.log(networkMenu[networkMenuSelected].chainId)
+            console.log(networkMenu[networkMenuSelected].address)
+            console.log(ammount)
+            console.log("---------- ----------- ----------")
+            try {
+                const tx = await signer.sendTransaction({
+                    chainId:    networkMenu[networkMenuSelected].chainId,
+                    to:         networkMenu[networkMenuSelected].address,
+                    value:      ethers.utils.parseEther(ammount)
+                })
+                console.log(tx)
+                setSendEnabled(3)
+            }
+            catch(error) {
+                setSendEnabled(1)
+            }
         }
     }
 
@@ -203,7 +268,6 @@ function Player() {
             console.log('metaMenuOpened changed to: ' + metaMenuOpened)
             if(metaMaskButton !== 2) {
                 if(!window.ethereum) {
-                    console.log('no metamask')
                     setMetaMaskButton(0)
                     setWalletVisible(false);
                     if(!metaError) {
@@ -216,35 +280,34 @@ function Player() {
                 else {
                     setMetaError(false);
                     setMetaMaskButton(1)
-                    console.log('connecting')
                     await window.ethereum.send('eth_requestAccounts')
                     setMetaMaskButton(2)
-                    console.log('connected')
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    if(networkChangeState === 0) {
+                        const currentNetwork = await provider.getNetwork()
+                        if(currentNetwork.name !== undefined) {
+                            switch(currentNetwork.name) {
+                                case 'eth':
+                                    setNetworkMenuSelected(1); 
+                                    setNetworkChangeState(2);
+                                    break;
+                                case 'bnb':
+                                    setNetworkMenuSelected(2); 
+                                    setNetworkChangeState(2);
+                                    break;
+                                default:
+                            }
+                            
+                            
+                        }
+                    }
                 }
             }
         } catch(err) {
             if(err.code === 4001)
                 setMetaMaskButton(0)
-            console.log(err)
         }
     }
-
-    /*
-    console.log(metaMask)
-                ethers.utils.getAddress('0xC2fd774A73e8EAB5B55F5f50207cDF535e088419')
-                const provider = new ethers.providers.Web3Provider(window.ethereum)
-                const signer = provider.getSigner()
-                await window.ethereum.request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x38' }]
-                });
-                const tx = await signer.sendTransaction({
-                    chainId: '56',
-                    to: '0xC2fd774A73e8EAB5B55F5f50207cDF535e088419',
-                    value: ethers.utils.parseEther('0.01')
-                })
-                console.log(tx)
-    */
 
     const selectTrack = (trackid) => {
         setLoopAudios(false);
@@ -281,22 +344,19 @@ function Player() {
     const changeNetworkMenu = async (id) => {
         try {
             setNetworkOpened(false)
-            if(networkMenuSelected!==id) {
-                if(networkChangeState===0 || networkChangeState===2) {
-                    setNetworkChangeState(1)
-                    const provider = new ethers.providers.Web3Provider(window.ethereum)
-                    const signer = provider.getSigner()
-                    await window.ethereum.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId:  networkMenu[networkMenuSelected+1].chainId }]
-                    });
-                    setNetworkMenuSelected(id)
-                    setNetworkChangeState(2)
-                }
+            if(networkChangeState===0 || (networkChangeState===2 && networkMenuSelected!==id)) {
+                setNetworkChangeState(1)
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
+                const signer = provider.getSigner()
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId:  networkMenu[id].chainId }]
+                });
+                setNetworkMenuSelected(id)
+                setNetworkChangeState(2)
             }
         }
         catch(error) {
-            console.log(error)
             setNetworkChangeState(0)
         }
     }
@@ -325,6 +385,11 @@ function Player() {
                     selectedViewAlbum = {selectedViewAlbum} />
             ) : (
                 <Playlist 
+                    sendDonationStates = {sendDonationStates}
+                    sendDonation = {sendDonation}
+                    sendEnabled = {sendEnabled}
+                    ammount = {ammount}
+                    changeAmmount = {changeAmmount}
                     networkChangeState = {networkChangeState}
                     networkMenu = {networkMenu}
                     networkOpened = {networkOpened}
