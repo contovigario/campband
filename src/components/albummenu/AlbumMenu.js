@@ -136,8 +136,6 @@ function AlbumMenu(props) {
         }
     }
 
-    
-
     const changeNetworkMenu = async (id) => {
         try {
             setNetworkOpened(false)

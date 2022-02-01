@@ -79,7 +79,7 @@ function Sideplayer(props) {
         setIsLoading(true)
         break;
     }
-  }, [props.selectedTrack, props.selectedAlbum])
+  }, [props.selectedTrack, props.selectedAlbum, props.albums])
   
   useEffect (() => {
     if(props.selectedTrack !== 0 && percentage===100 && props.loopAudios) {

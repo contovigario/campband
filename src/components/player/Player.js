@@ -1,5 +1,7 @@
 //import logo from './logo.svg';
 import React, {useState, useEffect} from 'react';
+
+//Components
 import Sideplayer from '../sideplayer/Sideplayer.js';
 import Playlist from '../playlist/Playlist.js';
 import AlbumList from '../albumlist/AlbumList.js'
@@ -9,7 +11,6 @@ import a_captainAlex from '../../audio/Condominium/01 - Captain Alex.mp3'
 import a_foreign from '../../audio/Condominium/02 - Foreign.mp3'
 import a_packtLike from '../../audio/Condominium/03 - Packt like.mp3'
 import a_alma from '../../audio/Condominium/04 - Alma.mp3'
-
 import a_explosive from '../../audio/Beside the point/explosive.mp3'
 import a_fast from '../../audio/Beside the point/fast.mp3'
 
@@ -22,22 +23,6 @@ import "./Player.css";
 import "./Covers.css";
 
 function Player() {
-
-    //downloadAlbum
-    //walletVisible
-    //metaError
-    //showManualWallet
-    //showWallet
-    //metaMaskButtonStates
-    //metaMaskButton
-    //metaMenuOpened
-    //networkMenu
-    //changeNetworkMenu
-    //networkChangeState
-    //changeNetworkOpened
-    //networkMenuSelected
-    //sendEnabled
-    //crypto_wallets
 
     const [selectedTrack, setSelectedTrack] = useState(0);
     const [menuSelected, setMenuSelected] = useState(true);
@@ -105,7 +90,6 @@ function Player() {
         }
     ]
 
-
     const selectTrack = (trackid) => {
         setLoopAudios(false);
         setSelectedAlbum(selectedViewAlbum);
@@ -130,29 +114,31 @@ function Player() {
             {menuSelected ? (
                 <AlbumList 
                     albums = {albums}
-                    changeTracklist = {changeTracklist}
-                    setMenuSelected = {setMenuSelected}
+                    selectedViewAlbum = {selectedViewAlbum}
                     menuSelected = {menuSelected} 
-                    selectedViewAlbum = {selectedViewAlbum} />
+                    setMenuSelected = {setMenuSelected}
+                    changeTracklist = {changeTracklist}
+                     />
             ) : (
                 <Playlist 
                     albums = {albums}
                     selectedViewAlbum = {selectedViewAlbum}
                     selectedAlbum = {selectedAlbum}
+                    tracklist = {tracklist}
+                    selectedTrack = {selectedTrack}
                     setMenuSelected = {setMenuSelected}
                     selectTrack = {selectTrack}
-                    selectedTrack = {selectedTrack}
-                    tracklist = {tracklist} />
+                     />
             )}
             <Sideplayer 
-                setLoopAudios = {setLoopAudios}
-                loopAudios = {loopAudios}
                 albums = {albums}
                 selectedViewAlbum = {selectedViewAlbum}
                 selectedAlbum = {selectedAlbum}
-                selectTrack = {selectTrack}
-                selectedTrack = {selectedTrack}
                 tracklist = {tracklist}
+                selectedTrack = {selectedTrack}
+                loopAudios = {loopAudios}
+                setLoopAudios = {setLoopAudios}
+                selectTrack = {selectTrack}
                 />
         </div>
     );
